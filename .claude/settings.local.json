@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(node --check server.js)",
+      "Bash(node --check src/appsScript.js)",
+      "Bash(node --check src/supabaseAuth.js)",
+      "Bash(node --check src/buildSheetRow.js)",
+      "Bash(node --check src/serialize.js)",
+      "Bash(node --check public/js/supabase-client.js)",
+      "Bash(node --check public/js/auth.js)",
+      "Bash(node --check public/js/app.js)"
+    ]
+  }
+}

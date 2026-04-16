@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cadastro de novo produto</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="brand">
+        <h1>Cadastro de novo produto</h1>
+        <p class="lead">Envie os dados e as fotos do produto. Ao enviar, o nosso time recebe a solicitacao automaticamente.</p>
+      </header>
+
+      <section id="loading-view" class="card">
+        <p>Carregando...</p>
+      </section>
+
+      <section id="login-view" class="card hidden">
+        <h2>Entrar</h2>
+        <p class="muted">Use o mesmo e-mail e senha que voce ja usa no painel.</p>
+        <form id="login-form" novalidate>
+          <label>
+            E-mail
+            <input type="email" name="email" autocomplete="email" required />
+          </label>
+          <label>
+            Senha
+            <input type="password" name="password" autocomplete="current-password" required />
+          </label>
+          <button type="submit" class="btn primary" data-loading-text="Entrando...">Entrar</button>
+          <p id="login-error" class="error" role="alert"></p>
+        </form>
+      </section>
+
+      <section id="form-view" class="card hidden">
+        <div class="session-bar">
+          <span>Logado como <strong id="session-email"></strong></span>
+          <button type="button" id="logout-btn" class="btn link">Sair</button>
+        </div>
+
+        <form id="product-form" novalidate>
+          <fieldset class="group">
+            <legend>Quem esta cadastrando</legend>
+            <label>
+              Empresa / loja
+              <input type="text" name="cliente" required maxlength="120" placeholder="Ex.: Loja Exemplo" />
+            </label>
+            <label>
+              Seu nome (contato)
+              <input type="text" name="solicitanteNome" required maxlength="120" placeholder="Ex.: Maria" />
+            </label>
+          </fieldset>
+
+          <fieldset class="group">
+            <legend>Produto</legend>
+            <label>
+              Nome do produto
+              <input type="text" name="productName" required maxlength="200" placeholder="Ex.: Camisa social manga longa" />
+            </label>
+            <label>
+              Custo (R$)
+              <input type="number" name="productCost" required min="0" step="0.01" inputmode="decimal" placeholder="0,00" />
+            </label>
+          </fieldset>
+
+          <fieldset class="group">
+            <legend>Tamanhos</legend>
+            <p class="muted small">Marque os tamanhos que este produto tera.</p>
+            <div id="sizes-groups"></div>
+          </fieldset>
+
+          <fieldset class="group" id="size-chart-wrapper" hidden>
+            <legend>Tabela de medidas</legend>
+            <p class="muted small">Preencha ao menos uma medida por tamanho marcado. Use o botao "adicionar medida" para incluir mais campos.</p>
+            <div id="size-chart-list"></div>
+          </fieldset>
+
+          <fieldset class="group">
+            <legend>Tipo de variacao</legend>
+            <div class="radio-row">
+              <label><input type="radio" name="variationType" value="cores" required /> Cores</label>
+              <label><input type="radio" name="variationType" value="estampas" /> Estampas</label>
+              <label><input type="radio" name="variationType" value="variados" /> Variados</label>
+            </div>
+
+            <div id="variation-colors" class="variation-block" hidden>
+              <p class="muted small">Selecione as cores disponiveis.</p>
+              <div id="colors-list" class="chips"></div>
+            </div>
+
+            <div id="variation-text" class="variation-block" hidden>
+              <p class="muted small" id="variation-text-hint">Liste as variacoes.</p>
+              <div id="text-variations-list"></div>
+              <button type="button" class="btn small" id="add-variation-btn">+ adicionar</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="group">
+            <legend>Imagens</legend>
+            <p class="muted small">Ate 8 imagens, maximo 8 MB cada.</p>
+            <label class="file-field">
+              <input type="file" id="images-input" accept="image/*" multiple />
+              <span class="btn small" aria-hidden="true">Escolher imagens</span>
+            </label>
+            <div id="images-preview" class="preview-grid"></div>
+          </fieldset>
+
+          <fieldset class="group">
+            <legend>Observacoes</legend>
+            <label>
+              <textarea name="notes" rows="3" maxlength="1000" placeholder="Ex.: material, acabamento, prazos..."></textarea>
+            </label>
+          </fieldset>
+
+          <button type="submit" class="btn primary big" data-loading-text="Enviando...">Enviar solicitacao</button>
+          <p id="submit-error" class="error" role="alert"></p>
+        </form>
+      </section>
+
+      <section id="success-view" class="card hidden">
+        <h2>Solicitacao enviada!</h2>
+        <p>Recebemos os dados do produto. Nosso time vai conferir e dar sequencia.</p>
+        <dl class="success-info">
+          <dt>Numero da solicitacao</dt>
+          <dd id="success-id"></dd>
+          <dt>Pasta com as imagens</dt>
+          <dd><a id="success-folder" href="#" target="_blank" rel="noopener"></a></dd>
+        </dl>
+        <button type="button" id="new-request-btn" class="btn primary">Enviar outra solicitacao</button>
+      </section>
+    </main>
+
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="/js/supabase-client.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/app.js"></script>
+  </body>
+</html>
